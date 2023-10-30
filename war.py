@@ -23,15 +23,23 @@ def simulate_attack(a: int, b: int) -> Tuple[int, int]:
 
     len_min = min(len(attack), len(defense))
     attacker_wins = defenser_wins = i = 0
+    last = 0
     while i < len_min:
         if attack[i] > defense[i]:
             attacker_wins += 1
+            last = 1
         else:
             defenser_wins += 1
+            last = 0
 
         i += 1
 
-    return (len(attack) - defenser_wins, len(defense) - attacker_wins)
+    if last:
+        attacker_wins = len(attack) - defenser_wins
+    else:
+        defenser_wins = len(defense) - attacker_wins
+
+    return (attacker_wins, defenser_wins)
 
 
 def attack_with_against(atk: int, d: int) -> bool:
